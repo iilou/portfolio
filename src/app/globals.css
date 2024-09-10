@@ -2,26 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* :root {
+	--background: #ffffff;
+	--foreground: #282a68;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
+} */
+
+/* @keyframes bg_anim {
+	0% {
+		background-color: hsl(0, 21%, 10%);
+	}
+	17% {
+		background-color: hsl(60, 21%, 10%);
+	}
+	33% {
+		background-color: hsl(120, 21%, 10%);
+	}
+	50% {
+		background-color: hsl(180, 21%, 10%);
+	}
+	67% {
+		background-color: hsl(240, 21%, 10%);
+	}
+	84% {
+		background-color: hsl(300, 21%, 10%);
+	}
+	100% {
+		background-color: hsl(355, 21%, 10%);
+	}
+} */
+
+@keyframes bg_anim {
+	0% {
+		background-color: hsl(236, 41%, 10%);
+	}
+	50% {
+		background-color: hsl(274, 41%, 10%);
+	}
+	100% {
+		background-color: hsl(236, 41%, 10%);
+	}
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+	/* background: #11111a; */
+	font-family: Arial, Helvetica, sans-serif;
+	animation-name: bg_anim;
+	animation-duration: 14s;
+	animation-iteration-count: infinite;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	.text-balance {
+		text-wrap: balance;
+	}
 }
