@@ -13,10 +13,10 @@ export default function SectionMiniLabel({
 				className={`flex items-center gap-4 transition-all ${active ? "w-64" : "w-44 hover:w-80"}`}
 			>
 				<div
-					className={`h-[2px] w-full ${active ? "bg-cyan-300" : "bg-cyan-800"} `}
+					className={`h-[2px] w-full ${active ? "bg-cyan-200/70" : "bg-cyan-600/50"} `}
 				></div>
 				<div
-					className={`text-base font-semibold ${active ? "text-cyan-200" : "text-cyan-700"} transition-all`}
+					className={`text-lg font-bold ${active ? "text-cyan-200" : "text-cyan-600"} transition-all`}
 				>
 					{text}
 				</div>

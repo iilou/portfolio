@@ -40,13 +40,46 @@
 
 @keyframes bg_anim {
 	0% {
-		background-color: hsl(236, 41%, 10%);
+		background-color: hsl(236, 41%, 12%);
+		/* box-shadow: 40px 0 50px -40px inset hsl(236, 80%, 30%); */
 	}
 	50% {
-		background-color: hsl(274, 41%, 10%);
+		background-color: hsl(274, 41%, 12%);
+		/* box-shadow: 40px 0 50px -40px inset hsl(274, 80%, 30%); */
 	}
 	100% {
-		background-color: hsl(236, 41%, 10%);
+		background-color: hsl(236, 41%, 12%);
+		/* box-shadow: 40px 0 50px -40px inset hsl(236, 80%, 30%); */
+	}
+}
+
+@keyframes bg_eff_anim {
+	0% {
+		/* background-image: radial-gradient(
+			circle,
+			hsl(236, 60%, 20%),
+			hsl(236, 41%, 12%)
+		); */
+		box-shadow: 0 0 250px 180px hsl(236, 80%, 30%);
+		background-color: hsl(236, 80%, 30%);
+	}
+	50% {
+		/* background-image: radial-gradient(
+			circle,
+			hsl(274, 60%, 20%),
+			hsl(274, 41%, 12%)
+		); */
+		box-shadow: 0 0 250px 180px hsl(274, 80%, 30%);
+		background-color: hsl(274, 80%, 30%);
+	}
+	100% {
+		/* background-image: radial-gradient(
+			circle,
+			hsl(236, 60%, 20%),
+			hsl(236, 41%, 12%)
+		); */
+		box-shadow: 0 0 250px 180px hsl(236, 80%, 30%);
+		background-color: hsl(236, 80%, 30%);
 	}
 }
 
@@ -61,5 +94,28 @@ body {
 @layer utilities {
 	.text-balance {
 		text-wrap: balance;
+	}
+	.customscroll::-webkit-scrollbar-track {
+		background-color: transparent;
+		display: none;
+	}
+
+	.customscroll::-webkit-scrollbar-track:hover {
+		background-color: transparent;
+		display: none;
+	}
+	.customscroll::-webkit-scrollbar-track:active {
+		background-color: transparent;
+		display: none;
+	}
+
+	.bg_effect {
+		pointer-events: none;
+		animation-name: bg_eff_anim;
+		animation-duration: 14s;
+		animation-iteration-count: infinite;
+		width: 2px;
+		height: 2px;
+		opacity: 0.5;
 	}
 }

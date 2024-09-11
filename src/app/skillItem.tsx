@@ -19,7 +19,12 @@ export default function SkillItem({
 				<Image
 					src={"/skills/" + skillName.toLowerCase() + ".png"}
 					layout={"fill"}
-					style={{ objectFit: "contain", borderRadius: "100px" }}
+					style={{
+						objectFit: "contain",
+						borderRadius: "100px",
+						backgroundColor: "#e8e8e8",
+						padding: "5px",
+					}}
 					alt={skillName + " icon"}
 				/>
 			</div>

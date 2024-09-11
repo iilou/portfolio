@@ -9,7 +9,8 @@ import SkillItem from "./skillItem";
 import ProjectItem from "./projectItem";
 import ContactItem from "./contactItem";
 
-import React from "react";
+import React, { useRef } from "react";
+import { assert } from "console";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -27,14 +28,87 @@ export default function Home() {
 	const [skillHover, setSkillHover] = React.useState(false);
 	const [projHover, setProjHover] = React.useState(false);
 	const [contactHover, setContactHover] = React.useState(false);
+
+	const [tick, setTick] = React.useState(0);
+	const maxTick = 500;
+	const inputflash = 7;
+
+	const effectRef = React.useRef<HTMLDivElement>(null);
+	const effectRef2 = React.useRef<HTMLDivElement>(null);
+	const stickyRef = React.useRef<HTMLDivElement>(null);
+	const pos = React.useRef({ x: 0, y: 0 });
+
+	const getPos = () => {
+		return pos.current;
+	};
+
+	const setPos = (newPos: { x: number; y: number }) => {
+		pos.current = newPos;
+	};
+
+	React.useEffect(() => {
+		setInterval(() => {
+			setTick((pretick) => (pretick + 1) % maxTick);
+		}, 25);
+
+		window.onscroll = (e) => {
+			if (effectRef.current && stickyRef.current && effectRef2.current) {
+				const pos = getPos();
+				effectRef.current.style.left = `${pos.x - stickyRef.current.getBoundingClientRect().left}px`;
+				effectRef.current.style.top = `${pos.y - stickyRef.current.getBoundingClientRect().top}px`;
+				effectRef2.current.style.left = `${-stickyRef.current.getBoundingClientRect().left}px`;
+				effectRef2.current.style.top = `${-stickyRef.current.getBoundingClientRect().top}px`;
+				console.log(pos);
+			}
+		};
+	}, []);
+
+	const getC = (original: string, tick: number) => {
+		if (tick < original.length) {
+			return original.substring(0, tick);
+		}
+		if (tick % (maxTick / 2) < original.length) {
+			return original.substring(
+				0,
+				original.length - (tick % (maxTick / 2)) - 1
+			);
+		}
+		return tick > maxTick / 2 ? "" : original;
+	};
+
+	const getComment = (original: string, tick: number) => {
+		const x = `// ${getC(original, tick)}${tick % (maxTick / inputflash) < maxTick / inputflash / 2 ? "_" : " "}`;
+		return x;
+	};
+
 	return (
-		<div className={inter.className}>
+		<div
+			className={inter.className}
+			onMouseMove={(e) => {
+				setPos({ x: e.clientX, y: e.clientY });
+				if (effectRef.current && stickyRef.current) {
+					effectRef.current.style.left = `${e.clientX - stickyRef.current.getBoundingClientRect().left}px`;
+					effectRef.current.style.top = `${e.clientY - stickyRef.current.getBoundingClientRect().top}px`;
+				}
+			}}
+		>
+			<div className="sticky_ref sticky h-0 w-full" ref={stickyRef}></div>
+			<div
+				className={`bg_effect absolute z-[-1] rounded-full`}
+				ref={effectRef}
+			></div>
+			<div
+				className={`bg_effect absolute z-[-1] rounded-full`}
+				ref={effectRef2}
+			></div>
 			<div className="mx-auto min-h-screen max-w-screen-xl">
 				<div className="flex flex-wrap">
-					<header className="pt-5 lg:sticky lg:top-0 lg:max-h-screen lg:w-1/2 lg:pl-3 lg:pr-3 lg:pt-12">
+					<header className="pt-5 lg:sticky lg:top-0 lg:max-h-screen lg:w-1/2 lg:pl-3 lg:pr-5 lg:pt-12">
 						{/* name box */}
-						<div className={"flex w-full flex-wrap gap-y-3 " + vsf.className}>
-							<a className="mx-auto flex w-full justify-center pb-4 text-5xl font-semibold text-gray-700 lg:mt-12 lg:justify-start">
+						<div className={`flex w-full flex-wrap gap-y-3 ${vsf.className}`}>
+							<a
+								className={`mx-auto flex w-full justify-center rounded-xl pb-5 pt-8 text-5xl font-semibold text-gray-700 shadow-[inset_25px_-40px_10px_-40px_rgba(110,120,160,1)] transition-all hover:bg-slate-700/40 hover:shadow-[inset_25px_40px_10px_-40px_rgba(110,120,160,1)]`}
+							>
 								{"<"}
 								<div className="px-1 text-blue-900">a</div>
 								{"> "}
@@ -43,15 +117,16 @@ export default function Home() {
 								<div className="px-1 text-blue-900">a</div>
 								{">"}
 							</a>
-							<div className="flex w-fit pl-6 text-base font-semibold text-gray-300 lg:w-full lg:pl-0 lg:pt-0">
-								<div className="text-emerald-500">software</div>
-								::
-								<div className="text-yellow-200">engineer</div>
-								<div className="text-yellow-400">{"(){"}</div>
+							<div className="flex w-fit pl-6 text-base font-semibold lg:mt-4 lg:w-full lg:pl-0 lg:pt-0 lg:text-2xl">
+								<div className="text-emerald-500/90">Software</div>
+								<div className="text-gray-300/50">::</div>
+								<div className="text-yellow-200">Engineer</div>
+								<div className="text-yellow-400/50">{"()"}</div>
+								<div className="text-yellow-400/50">{"{"}</div>
 							</div>
-							<div className="photo flex w-fit pl-4 text-base font-semibold lg:items-end">
+							<div className="photo flex w-fit pl-4 text-base font-semibold lg:w-full lg:items-end lg:justify-center lg:pr-3 lg:pt-3">
 								<div
-									className={`h-fit pb-4 pr-4 text-right text-fuchsia-400 lg:w-[90px] ${vsf.className}`}
+									className={`h-fit pb-4 pr-4 text-right text-fuchsia-400/50 lg:w-[90px] ${vsf.className}`}
 								>
 									return
 								</div>
@@ -59,19 +134,25 @@ export default function Home() {
 								<div
 									className={`justify-right flex pb-4 pl-4 lg:w-[120px] ${vsf.className}`}
 								>
-									<div className="text-gray-300">;</div>
-									<div className="text-yellow-400">{"}"}</div>
+									<div className="text-gray-300/50">;</div>
+									<div className="text-yellow-400/50">{"}"}</div>
 								</div>
 							</div>
 						</div>
 						<div
-							className={`py-3 pl-6 text-base font-bold text-green-600 transition-all lg:py-6 lg:pl-0 lg:text-lg ${vsf.className}`}
+							className={`py-3 pl-6 text-base font-bold text-green-600 transition-all lg:pb-5 lg:pl-0 lg:pt-7 lg:text-lg ${vsf.className}`}
 						>
-							{
-								"// Hi, I'm Marvin and I do (mostly) anything software related. "
-							}
+							{getComment(
+								"Hi, I'm Marvin and I do (mostly) anything software related",
+								tick
+							)}
+							{/*
+								`// Hi, I'm Marvin and I do (mostly) anything software related.`
+							*/}
 						</div>
-						<div className="hidden w-full gap-2 pb-2 pt-8 lg:flex lg:flex-col">
+						<div
+							className={`hidden w-full gap-2 pb-2 pt-2 lg:flex lg:flex-col ${vsf.className}`}
+						>
 							<SectionMiniLabel
 								text="About"
 								href="#About"
@@ -117,7 +198,7 @@ export default function Home() {
 							</a>
 						</div>
 					</header>
-					<div className="w-full pb-96 lg:w-1/2 lg:pt-12">
+					<div className="w-full pb-96 lg:w-1/2 lg:pl-5 lg:pt-8">
 						<div
 							onMouseOver={() => {
 								setAboutHover(true);
@@ -174,7 +255,7 @@ export default function Home() {
 										: "shadow-[inset_25px_40px_10px_-40px_rgba(110,120,160,1)]")
 								}
 							>
-								<div className="relative grid w-max grid-flow-col gap-1 overflow-x-scroll rounded-lg py-2">
+								<div className="customscroll relative grid w-max grid-flow-col gap-1 overflow-x-scroll rounded-lg py-2">
 									<SkillItem skillName="C++" href="#tetris_ai" />
 									<SkillItem skillName="Next" href="/" />
 									<SkillItem skillName="React" href="/" />
@@ -244,7 +325,7 @@ export default function Home() {
 									IPC Index is a Javascript+Flask website that fetches displays any user's profile in Honkai: Star Rail via. Mihomo API."
 									repo="https://github.com/iilou/ipcindex"
 									link="https://github.com/iilou/ipcindex"
-									skillsUsed="oJavascript oFlask"
+									skillsUsed="oJavascript oFlask oPython"
 									picName="ipc_index"
 								/>
 							</div>

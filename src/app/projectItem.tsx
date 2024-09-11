@@ -35,13 +35,13 @@ export default function ProjectItem({
 							layout={"fill"}
 							style={{
 								objectFit: "cover",
-								borderRadius: "7px",
+								borderRadius: "17px",
 								boxShadow: "inset 0 0 0 200px #243c5a77",
 							}}
 							alt={title + " icon"}
 						/>
 						<a
-							className="absolute h-[160px] w-[240px] bg-[#00000074] transition-all hover:bg-[#00000022]"
+							className="absolute h-[160px] w-[240px] rounded-[17px] bg-[#00000074] transition-all hover:bg-[#00000022]"
 							href={repo}
 							target="_blank"
 						></a>
