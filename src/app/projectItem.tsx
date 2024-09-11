@@ -87,11 +87,12 @@ export default function ProjectItem({
 				</div>
 			</div>
 			<div className="flex justify-start gap-2 pt-4">
-				{skillsUsed.split(" ").map((skill) => {
-					let u = skill.at(0) != "u";
+				{skillsUsed.split(" ").map((skill, i) => {
+					const u = skill.at(0) != "u";
 					skill = skill.slice(1, skill.length);
 					return (
 						<SkillButton
+							key={i}
 							href={u ? "#" + skill : ""}
 							inner={skill.split("_").join(" ")}
 						/>

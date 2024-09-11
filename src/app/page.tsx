@@ -22,7 +22,6 @@ const vsf = Inconsolata({
 });
 
 export default function Home() {
-	const someVariable = "df";
 	const imgSize = 40;
 	const [aboutHover, setAboutHover] = React.useState(false);
 	const [skillHover, setSkillHover] = React.useState(false);
@@ -130,31 +129,33 @@ export default function Home() {
 							}}
 						>
 							<Subtitle text={"About"} hover={aboutHover} />
-							<p
+							<div
 								className={
-									"rounded-lg px-8 pb-4 pt-4 text-sm font-semibold text-slate-400/60 transition-all " +
+									"rounded-lg px-8 pb-8 pt-8 text-base font-light text-slate-400/60 transition-all " +
 									(aboutHover
 										? "shadow-[inset_25px_-40px_10px_-40px_rgba(110,120,160,1)]"
 										: "shadow-[inset_25px_40px_10px_-40px_rgba(110,120,160,1)]")
 								}
 							>
-								If you're visiting this page, you're likely here because you're
-								searching for a random sentence. Sometimes a random word just
-								isn't enough, and that is where the random sentence generator
-								comes into play. By inputting the desired number, you can make a
-								list of as many random sentences as you want or need. Producing
-								random sentences can be helpful in a number of different ways.
-								For writers, a random sentence can help them get their creative
-								juices flowing. Since the topic of the sentence is completely
-								unknown, it forces the writer to be creative when the sentence
-								appears. There are a number of different ways a writer can use
-								the random sentence for creativity. The most common way to use
-								the sentence is to begin a story. Another option is to include
-								it somewhere in the story. A much more difficult challenge is to
-								use it to end a story. In any of these cases, it forces the
-								writer to think creatively since they have no idea what sentence
-								will appear from the tool.
-							</p>
+								<div>{`Hi, I'm Marvin and I'm a 19 year old software engineering
+								currently studying at the University of Ottawa. Ever since high
+								school, I've been highly passionate about software development,
+								always looking for new opportunities to learn and grow.`}</div>
+								<br />
+								<div>{`I've
+								worked on a variety of projects covering a wide range of topics,
+								programming languages, technologies, and frameworks. For
+								example, I've most recently worked on a Tetris AI using a
+								Genetic Learning Algorithm Model in C++, a React website that
+								visualizes data structures and algorithms, and an Android
+								application for clients looking to rent. As a result, I'm
+								confident in my ability to learn new technologies and adapt to
+								new environments quickly.`}</div>
+								<br />
+								<div>{`I'm always looking for new
+								opportunities to learn and grow, so if you have any questions or
+								would like to get in touch, feel free to contact me.`}</div>
+							</div>
 						</div>
 						<div
 							onMouseOver={() => {
@@ -198,7 +199,7 @@ export default function Home() {
 							<Subtitle text="Projects" hover={projHover} />
 							<div
 								className={
-									"flex flex-col gap-1 rounded-lg pb-4 pt-8 transition-all " +
+									"flex flex-col gap-1 rounded-lg pb-6 pt-8 transition-all " +
 									(projHover
 										? "shadow-[inset_25px_-40px_10px_-40px_rgba(110,120,160,1)]"
 										: "shadow-[inset_25px_40px_10px_-40px_rgba(110,120,160,1)]")
@@ -257,10 +258,22 @@ export default function Home() {
 							}}
 						>
 							<Subtitle text="Contact" hover={contactHover} />
-							<div>
+							<div
+								className={`rounded-lg pb-9 pt-7 ${
+									contactHover
+										? "shadow-[inset_25px_-40px_10px_-40px_rgba(110,120,160,1)]"
+										: "shadow-[inset_25px_40px_10px_-40px_rgba(110,120,160,1)]"
+								}`}
+							>
 								<ContactItem label="Email" desc="li.marvin.nn@gmail.com" />
-								<ContactItem label="Linkedin" desc="li.marvin.nn@gmail.com" />
-								<ContactItem label="Email" desc="li.marvin.nn@gmail.com" />
+								<ContactItem
+									label="Linkedin"
+									desc="https://www.linkedin.com/in/marvin-li-08953b298"
+								/>
+								<ContactItem
+									label="Github"
+									desc="https://www.github.com/iilou"
+								/>
 							</div>
 						</div>
 					</div>
