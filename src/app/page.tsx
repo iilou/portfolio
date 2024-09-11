@@ -9,8 +9,7 @@ import SkillItem from "./skillItem";
 import ProjectItem from "./projectItem";
 import ContactItem from "./contactItem";
 
-import React, { useRef } from "react";
-import { assert } from "console";
+import React from "react";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -51,7 +50,7 @@ export default function Home() {
 			setTick((pretick) => (pretick + 1) % maxTick);
 		}, 25);
 
-		window.onscroll = (e) => {
+		window.onscroll = () => {
 			if (effectRef.current && stickyRef.current && effectRef2.current) {
 				const pos = getPos();
 				effectRef.current.style.left = `${pos.x - stickyRef.current.getBoundingClientRect().left}px`;
