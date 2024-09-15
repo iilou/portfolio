@@ -10,6 +10,8 @@ import ProjectItem from "./projectItem";
 import ContactItem from "./contactItem";
 
 import React from "react";
+import { title } from "process";
+import { get } from "http";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -37,6 +39,27 @@ export default function Home() {
 	const stickyRef = React.useRef<HTMLDivElement>(null);
 	const pos = React.useRef({ x: 0, y: 0 });
 
+	const title_pre_queue = [
+		"Software",
+		"Full-Stack",
+		"C++",
+		"Java",
+		"Python",
+		"Software",
+	];
+	const title_suffix_queue = [
+		"Engineer",
+		"Developer",
+		"Developer",
+		"Developer",
+		"Developer",
+		"Developer",
+	];
+
+	const [tInd, setTInd] = React.useState(0);
+	const [title_opac, setTitleOpac] = React.useState(1);
+	const [titleTick, setTitleTick] = React.useState(0);
+
 	const getPos = () => {
 		return pos.current;
 	};
@@ -50,6 +73,14 @@ export default function Home() {
 			setTick((pretick) => (pretick + 1) % maxTick);
 		}, 25);
 
+		const timer = setInterval(() => {
+			setTitleTick((pretick) => (pretick + 1) % 5);
+		}, 1000);
+
+		const timer2 = setInterval(() => {
+			setTInd((pretick) => (pretick + 1) % 6);
+		}, 5000);
+
 		window.onscroll = () => {
 			if (effectRef.current && stickyRef.current && effectRef2.current) {
 				const pos = getPos();
@@ -59,6 +90,11 @@ export default function Home() {
 				effectRef2.current.style.top = `${-stickyRef.current.getBoundingClientRect().top}px`;
 				console.log(pos);
 			}
+		};
+
+		return function stopTimer() {
+			clearInterval(timer);
+			clearInterval(timer2);
 		};
 	}, []);
 
@@ -78,6 +114,10 @@ export default function Home() {
 	const getComment = (original: string, tick: number) => {
 		const x = `// ${getC(original, tick)}${tick % (maxTick / inputflash) < maxTick / inputflash / 2 ? "_" : " "}`;
 		return x;
+	};
+
+	const getOpac = (tick: number) => {
+		return tick == 3 || tick == 4 ? 0 : 1;
 	};
 
 	return (
@@ -102,44 +142,80 @@ export default function Home() {
 			></div>
 			<div className="mx-auto min-h-screen max-w-screen-xl">
 				<div className="flex flex-wrap">
-					<header className="pt-5 lg:sticky lg:top-0 lg:max-h-screen lg:w-1/2 lg:pl-3 lg:pr-5 lg:pt-12">
+					<header className="w-full pt-0 lg:sticky lg:top-0 lg:max-h-screen lg:w-1/2 lg:pl-3 lg:pr-5 lg:pt-12">
+						<a
+							className={`med_transition mx-auto mb-3 flex w-full justify-center rounded-xl pb-5 pt-8 text-3xl font-semibold text-gray-700 shadow-[inset_25px_-40px_10px_-40px_rgba(110,120,160,1)] hover:shadow-[inset_25px_40px_10px_-40px_rgba(110,120,160,1)] md:text-4xl`}
+						>
+							{"<"}
+							<div className="px-1 text-blue-900">a</div>
+							{"> "}
+							<div className="px-4 font-black text-gray-200">Marvin Li</div>
+							{"</"}
+							<div className="px-1 text-blue-900">a</div>
+							{">"}
+						</a>
 						{/* name box */}
-						<div className={`flex w-full flex-wrap gap-y-3 ${vsf.className}`}>
-							<a
-								className={`mx-auto flex w-full justify-center rounded-xl pb-5 pt-8 text-5xl font-semibold text-gray-700 shadow-[inset_25px_-40px_10px_-40px_rgba(110,120,160,1)] transition-all hover:bg-slate-700/40 hover:shadow-[inset_25px_40px_10px_-40px_rgba(110,120,160,1)]`}
-							>
-								{"<"}
-								<div className="px-1 text-blue-900">a</div>
-								{"> "}
-								<div className="px-4 font-black text-gray-200">Marvin Li</div>
-								{"</"}
-								<div className="px-1 text-blue-900">a</div>
-								{">"}
-							</a>
-							<div className="flex w-fit pl-6 text-base font-semibold lg:mt-4 lg:w-full lg:pl-0 lg:pt-0 lg:text-2xl">
-								<div className="text-emerald-500/90">Software</div>
-								<div className="text-gray-300/50">::</div>
-								<div className="text-yellow-200">Engineer</div>
-								<div className="text-yellow-400/50">{"()"}</div>
-								<div className="text-yellow-400/50">{"{"}</div>
-							</div>
-							<div className="photo flex w-fit pl-4 text-base font-semibold lg:w-full lg:items-end lg:justify-center lg:pr-3 lg:pt-3">
+						<div
+							className={`flex w-full flex-wrap justify-between gap-y-3 ${vsf.className}`}
+						>
+							<div className="long_transition flex w-fit pl-6 text-base font-semibold lg:mt-4 lg:w-full lg:pl-0 lg:pt-0 lg:text-2xl">
 								<div
+									className="long_transition text-emerald-500/90"
+									style={{ opacity: getOpac(titleTick) }}
+								>
+									{title_pre_queue[tInd]}
+								</div>
+								<div
+									className="long_transition text-gray-300/50"
+									style={{ opacity: getOpac(titleTick) }}
+								>
+									::
+								</div>
+								<div
+									className="long_transition text-yellow-200"
+									style={{ opacity: getOpac(titleTick) }}
+								>
+									{title_suffix_queue[tInd]}
+								</div>
+								<div
+									className="long_transition text-yellow-400/50"
+									style={{ opacity: getOpac(titleTick) }}
+								>
+									{"()"}
+								</div>
+								<div
+									className="long_transition text-yellow-400/50"
+									style={{ opacity: getOpac(titleTick) }}
+								>
+									{"{"}
+								</div>
+							</div>
+							<div className="photo flex w-fit pl-4 pr-5 text-base font-semibold lg:w-full lg:items-end lg:justify-center lg:pr-0 lg:pt-3">
+								{/* <div
 									className={`h-fit pb-4 pr-4 text-right text-fuchsia-400/50 lg:w-[90px] ${vsf.className}`}
 								>
 									return
+								</div> */}
+								<div className="h-16 w-16 rounded-lg bg-blue-300 shadow-[0px_0px_12px_5px_rgba(200,200,200,0.3)] transition-all hover:shadow-[0px_0px_20px_8px_rgba(200,200,200,0.3)] lg:h-52 lg:w-52 lg:rounded-3xl">
+									<div className="absolute h-16 w-16 rounded-lg border-[12px_solid_rgb(20,20,20)] shadow-[inset_0px_0px_15px_15px_rgba(0,0,0,0.5)] lg:h-52 lg:w-52 lg:rounded-3xl"></div>
+									<Image
+										src="/me.jpg"
+										width={300}
+										height={300}
+										alt="photo of me"
+										className="h-full w-full rounded-lg lg:rounded-3xl"
+									/>
 								</div>
-								<div className="h-16 w-16 rounded-lg bg-blue-300 lg:h-44 lg:w-44 lg:rounded-3xl"></div>
-								<div
+								{/* <div
 									className={`justify-right flex pb-4 pl-4 lg:w-[120px] ${vsf.className}`}
 								>
 									<div className="text-gray-300/50">;</div>
 									<div className="text-yellow-400/50">{"}"}</div>
-								</div>
+								</div> */}
 							</div>
 						</div>
 						<div
-							className={`py-3 pl-6 text-base font-bold text-green-600 transition-all lg:pb-5 lg:pl-0 lg:pt-7 lg:text-lg ${vsf.className}`}
+							className={`h-12 py-3 pl-6 text-sm font-bold text-green-600 transition-all lg:h-fit lg:pb-5 lg:pl-0 lg:pt-7 lg:text-lg ${vsf.className}`}
 						>
 							{getComment(
 								"Hi, I'm Marvin and I do (mostly) anything software related",
@@ -257,14 +333,14 @@ export default function Home() {
 								<div className="customscroll relative grid w-max grid-flow-col gap-1 overflow-x-scroll rounded-lg py-2">
 									<SkillItem skillName="C++" href="#tetris_ai" />
 									<SkillItem skillName="Next" href="/" />
-									<SkillItem skillName="React" href="/" />
+									<SkillItem skillName="React" href="#dsa_vis" />
 									<SkillItem skillName="Python" href="/" />
-									<SkillItem skillName="Java" href="/" />
+									<SkillItem skillName="Java" href="#android_app" />
 									<SkillItem skillName="Tailwind" href="/" />
-									<SkillItem skillName="Flask" href="/" />
-									<SkillItem skillName="Javascript" href="/" />
-									<SkillItem skillName="Android" href="/" />
-									<SkillItem skillName="Firebase" href="/" />
+									<SkillItem skillName="Flask" href="#ipc_index" />
+									<SkillItem skillName="Javascript" href="#dsa_vis" />
+									<SkillItem skillName="Android" href="#android_app" />
+									<SkillItem skillName="Firebase" href="#ipc_index" />
 								</div>
 							</div>
 						</div>
@@ -316,7 +392,7 @@ export default function Home() {
 									repo="https://github.com/SEG-2105/project-group-8"
 									link="https://github.com/SEG-2105/project-group-8"
 									skillsUsed="oJava oAndroid"
-									picName="tetris_ai"
+									picName="android_app"
 								/>
 								<ProjectItem
 									title="IPC Index - Personal Project"
