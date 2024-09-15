@@ -10,8 +10,6 @@ import ProjectItem from "./projectItem";
 import ContactItem from "./contactItem";
 
 import React from "react";
-import { title } from "process";
-import { get } from "http";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -57,7 +55,6 @@ export default function Home() {
 	];
 
 	const [tInd, setTInd] = React.useState(0);
-	const [title_opac, setTitleOpac] = React.useState(1);
 	const [titleTick, setTitleTick] = React.useState(0);
 
 	const getPos = () => {
