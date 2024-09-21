@@ -257,7 +257,8 @@ export default function Home() {
 								/>
 							</a>
 							<a
-								href="http://filedump.to/download/725d9ad9cedf4f558cac40b81f321240/resume_cv-4.pdf"
+								href="/resume.pdf"
+								download="Marvin_Li_Resume.pdf"
 								target="_blank"
 							>
 								<Image
