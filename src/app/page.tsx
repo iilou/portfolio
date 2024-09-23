@@ -8,6 +8,7 @@ import Subtitle from "./subtitle";
 import SkillItem from "./skillItem";
 import ProjectItem from "./projectItem";
 import ContactItem from "./contactItem";
+import ChangingImage from "./changingImage";
 
 import React from "react";
 
@@ -195,12 +196,22 @@ export default function Home() {
 								</div> */}
 								<div className="h-16 w-16 rounded-lg bg-blue-300 shadow-[0px_0px_12px_5px_rgba(200,200,200,0.3)] transition-all hover:shadow-[0px_0px_20px_8px_rgba(200,200,200,0.3)] lg:h-52 lg:w-52 lg:rounded-3xl">
 									<div className="absolute h-16 w-16 rounded-lg border-[12px_solid_rgb(20,20,20)] shadow-[inset_0px_0px_15px_15px_rgba(0,0,0,0.5)] lg:h-52 lg:w-52 lg:rounded-3xl"></div>
-									<Image
+									{/* <Image
 										src="/me.jpg"
 										width={300}
 										height={300}
 										alt="photo of me"
 										className="h-full w-full rounded-lg lg:rounded-3xl"
+									/> */}
+									<ChangingImage
+										srcList={["/me.jpg", "/me1.png", "/me2.png"]}
+										altList={["photo of me", "photo of me", "photo of me"]}
+										num={3}
+										widthList={300}
+										heightList={300}
+										styleList={{}}
+										className="h-full w-full rounded-lg lg:rounded-3xl"
+										delay={3000}
 									/>
 								</div>
 								{/* <div
